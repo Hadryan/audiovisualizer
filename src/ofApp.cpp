@@ -2,15 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
-	bool did_load_succeed = ofLoadImage(texture, "C:\\Users\\simde\\source\\repos\\of_v0.10.1_vs2017_release\\apps\\myApps\\finalProject-sdesai51\\images\\sunset.jpg");
-	if (did_load_succeed) {
-		std::cout << "load succeeded\n";
-	}
-	else {
-		std::cout << "failed\n"; 
-	}
-
-	//image.load("C:\\Users\simde\source\repos\of_v0.10.1_vs2017_release\apps\myApps\finalProject-sdesai51\images\sunset.jpg");
+	//ofLoadImage(texture, "C:\\Users\\simde\\source\\repos\\of_v0.10.1_vs2017_release\\apps\\myApps\\finalProject-sdesai51\\images\\sunset.jpg");
 }
 //--------------------------------------------------------------
 void ofApp::update(){
