@@ -6,4 +6,4 @@
 			More visually pleasing interface, brightness and bar colors vary based on audio frequency. Overall, nicer application. 
 
 	- **Development Process** 
-			- 
+			
