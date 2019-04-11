@@ -6,4 +6,6 @@
 			More visually pleasing interface, brightness and bar colors vary based on audio frequency. Overall, nicer application. 
 
 	- **Development Process** 
-			
+			- Problem: Unable to draw circles to represent the dots in the foreground animation.
+			- Solution: Had to use new library and its methods. Specifically, had to use the ofCircle method
+			implementation from the Graphics library to assist in creating circles.

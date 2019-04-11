@@ -19,4 +19,5 @@ class ofApp : public ofBaseApp{
 		void update();
 		void draw();
 		void dotCoordinateSetUp();
+		void drawDots();
 };

@@ -18,6 +18,7 @@ void ofApp::update(){
 void ofApp::draw(){
 	texture.draw(100, 100, 1);
 	ofBackground(blueBackGround, redBackground, greenBackground);
+	drawDots();
 }
 
 void ofApp::dotCoordinateSetUp() {
@@ -29,4 +30,18 @@ void ofApp::dotCoordinateSetUp() {
 		}
 	}
 }
+
+void ofApp::drawDots() {
+	int size = (sqrt(numberOfDots)) * dotSpacing;
+	ofPushMatrix();
+	ofTranslate((ofGetWidth() - size) / 2, (ofGetHeight() - size) / 2);
+	ofSetColor(blueDot, redDot, greenDot);
+	ofFill();
+	for (int i = 0; i < numberOfDots; i++) {
+		ofCircle(dots[i].x, dots[i].y, 2);
+	}
+	ofPopMatrix();
+}
+
+
 
