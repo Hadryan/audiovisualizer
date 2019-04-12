@@ -3,21 +3,25 @@
 #include "ofMain.h"
 
 class ofApp : public ofBaseApp{
-	int  blueBackGround = 175;
-	int redBackground = 175;
-	int greenBackground = 175;
-	int blueDot = 0;
-	int redDot = 0;
-	int greenDot = 0;
+	struct Color {
+		Color(int purple, int white, int pink) : purpleColor(purple), whiteColor(white), pinkColor(pink) {};
+		int purpleColor;
+		int whiteColor;
+		int pinkColor;
+	};
+	Color *backgroundColor = new Color(175, 175, 175);
+	Color *dotColor = new Color(0, 0, 0);
 
-	private:
-	ofImage image;
-	ofTexture texture;
+	int distanceThreshold = 50;
+	double dotSpeed = .05;
+	int animationRadius = 500;
+	double currentTime = 0;
 
 	public:
 		void setup();
 		void update();
 		void draw();
-		void dotCoordinateSetUp();
 		void drawDots();
+		void updateDots();
+		void linkDots();
 };
