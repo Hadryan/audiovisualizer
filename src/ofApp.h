@@ -4,17 +4,18 @@
 
 class ofApp : public ofBaseApp{
 	struct Color {
-		Color(int purple, int white, int pink) : purpleColor(purple), whiteColor(white), pinkColor(pink) {};
-		int purpleColor;
-		int whiteColor;
-		int pinkColor;
+		Color(int blue, int red, int green) : blueColor(blue), redColor(red), greenColor(green) {};
+		int blueColor;
+		int redColor;
+		int greenColor;
 	};
 	Color *backgroundColor = new Color(175, 175, 175);
-	Color *dotColor = new Color(0, 0, 0);
+	
+	ofSoundPlayer soundPlayer;
 
 	int distanceThreshold = 50;
-	double dotSpeed = .05;
-	int animationRadius = 500;
+	double dotSpeed = .1;
+	int animationRadius = 475;
 	double currentTime = 0;
 
 	public:
@@ -22,6 +23,7 @@ class ofApp : public ofBaseApp{
 		void update();
 		void draw();
 		void drawDots();
+		void updateColors();
 		void updateDots();
 		void linkDots();
 };
