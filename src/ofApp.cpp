@@ -5,10 +5,14 @@ const int numberOfDots = 300;
 const int numberOfBars = 500;
 //Two dimensional vector-like structure to hold dots and their x,y coordinates
 ofVec2f dots[numberOfDots];
+float dotRadius = 3;
+float lineWidth = 2;
+float speedMultiplier = 2;
 vector<bool> isConnected(numberOfDots, false);
 //Vector that determines the offset of the x,y coordindates of each dot to ensure they remain centered and on screen
 vector<double> yOffset(numberOfDots), xOffset(numberOfDots);
 float soundSpectrum[numberOfBars];
+bool maxBarHeightReached = false;
 
 
 
@@ -39,22 +43,27 @@ void ofApp::update(){
 void ofApp::draw(){
 	ofBackground(backgroundColor->blueColor, backgroundColor->redColor, backgroundColor->greenColor);
 	//Draw rectangles based on audio frequency
-	for (int i = 0; i < numberOfBars; i++) {
-		ofRect(i * 5, ofGetHeight(), 4, -soundSpectrum[i] * 225);
-	}
+	drawBars();
 	drawDots();
 
 }
 
 //Setup, Update, and Draw Dots for foreground animation of the Audio Visualizer
 void ofApp::drawDots() {
+	if (maxBarHeightReached) {
+		dotRadius = 4;
+		lineWidth = 3;
+	} else {
+		dotRadius = 3;
+		lineWidth = 2;
+	}
 	//Centers the dots within the animation 
 	ofPushMatrix();
 	ofTranslate(ofGetWidth() / 2, ofGetHeight() / 2);
 	//Choose the color of the dots and create circles at those dots
 	for (int i = 0; i < numberOfDots; i++) {
 		if (isConnected[i]) {
-			ofDrawCircle(dots[i].x, dots[i].y, 2);
+			ofDrawCircle(dots[i].x, dots[i].y, dotRadius);
 		}
 	}
 	linkDots();
@@ -69,6 +78,7 @@ void ofApp::linkDots() {
 			double distance = ofDist(dots[i].x, dots[i].y, dots[j].x, dots[j].y);
 			if (distance < distanceThreshold) {
 				isConnected[i] = true;
+				ofSetLineWidth(lineWidth);
 				ofDrawLine(dots[i], dots[j]);
 			}
 		}
@@ -90,11 +100,18 @@ void ofApp::updateDots() {
 	}
 }
 
-void ofApp::drawRectangles() {
-	int height = 5;
-	int width = 3;
-
+void ofApp::drawBars() {
+	maxBarHeightReached = false;
+	float barHeight;
+	for (int i = 0; i < numberOfBars; i++) {
+		barHeight = -soundSpectrum[i] * 225;
+		ofRect(i * 5, ofGetHeight(), 4, barHeight);
+	}
+	if (-barHeight >= 225) {
+		maxBarHeightReached = true;
+	}
 }
+
 
 
 

@@ -25,5 +25,5 @@ class ofApp : public ofBaseApp{
 		void drawDots();
 		void updateDots();
 		void linkDots();
-		void drawRectangles();
+		void drawBars();
 };
