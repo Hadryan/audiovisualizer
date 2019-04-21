@@ -50,5 +50,8 @@
     <Media Include="audio\audioBeats.wav">
       <Filter>audio</Filter>
     </Media>
+    <Media Include="audio\epiphany.wav">
+      <Filter>audio</Filter>
+    </Media>
   </ItemGroup>
 </Project>

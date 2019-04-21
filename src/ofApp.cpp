@@ -26,11 +26,9 @@ int backColor = 200;
 float soundSpectrumSmoothnessVal = .93;
 
 
-
-
 void ofApp::setup() {
 	backgroundImage.load("C:\\Users\\simde\\source\\repos\\of_v0.10.1_vs2017_release\\apps\\myApps\\finalProject - sdesai51\\bin\\data\\sunset.jpg`");
-	soundPlayer.loadSound("..//..//audio//audioBeats.wav");
+	soundPlayer.loadSound("..//..//audio//epiphany.wav");
 	soundPlayer.play();
 	for (int i = 0; i < numberOfDots; i++) {
 		xOffset[i] = ofRandom(0, 1000);
@@ -60,7 +58,6 @@ void ofApp::draw(){
 	backgroundImage.draw(0, 0, ofGetWidth(), ofGetHeight());
 	drawBars();
 	drawDots();
-
 }
 
 //Setup, Update, and Draw Dots for foreground animation of the Audio Visualizer
@@ -161,7 +158,7 @@ void bassSpike() {
 	speedMultiplier = 1.1;
 }
 
-//Regular settings
+//Regular settings if bar is not at maximum height
 void clearBassSpike() {
 	dotRadius = 3;
 	lineWidth = 2;

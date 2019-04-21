@@ -15,7 +15,6 @@ class ofApp : public ofBaseApp{
 	Color *backgroundColor = new Color(175, 175, 175);
 	
 	ofSoundPlayer soundPlayer;
-	ofImage backgroundImage;
 
 	public:
 		void setup();

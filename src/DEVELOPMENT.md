@@ -24,6 +24,6 @@
 			-Fix: Switched entirely to start using ofSoundPlayer and made the decision to just work with a single
 			song for now.
 
-			-Issue: Changes to the dotSpeed varialbe were not causing the dots to actually change speed 
+			-Issue: Changes to the dotSpeed variable were not causing the dots to actually change speed 
 			-Fix: Implemented and used a speed multiplier variable and while updating, multiplied it with the offsets
 			values for the x and y coordinates of the dots.

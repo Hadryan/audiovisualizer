@@ -209,6 +209,7 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="audio\audioBeats.wav" />
+    <Media Include="audio\epiphany.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ProjectExtensions>
