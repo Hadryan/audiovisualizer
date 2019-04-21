@@ -14,11 +14,6 @@ class ofApp : public ofBaseApp{
 	ofSoundPlayer soundPlayer;
 	ofImage backgroundImage;
 
-	int distanceThreshold = 50;
-	double dotSpeed = .1;
-	int animationRadius = 500;
-	double currentTime = 0;
-
 	public:
 		void setup();
 		void update();

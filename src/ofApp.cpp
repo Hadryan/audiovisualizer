@@ -4,18 +4,23 @@
 const int numberOfDots = 450;
 //Range for frequency of audio
 const int numberOfBars = 400;
-//Two dimensional vector-like structure to hold dots and their x,y coordinates
-//int barWidth = 10;
+int barWidth = 10;
 int maxBarHeight = 250;
+//Two dimensional vector-like structure to hold dots and their x,y coordinates
 ofVec2f dots[numberOfDots];
 float dotRadius = 3;
 float lineWidth = 2;
-float speedMultiplier = 2;
+float speedMultiplier = 1.1;
+int distanceThreshold = 50;
+double dotSpeed = .1;
+int animationRadius = 550;
+double currentTime = 0;
 vector<bool> isConnected(numberOfDots, false);
 //Vector that determines the offset of the x,y coordindates of each dot to ensure they remain centered and on screen
 vector<double> yOffset(numberOfDots), xOffset(numberOfDots);
 float soundSpectrum[numberOfBars];
 bool maxBarHeightReached = false;
+int color = 200;
 
 
 
@@ -41,6 +46,13 @@ void ofApp::update(){
 }
 
 void ofApp::draw(){
+	if (maxBarHeightReached && color < 255) {
+		color++;
+	}
+	else if (color >= 100) {
+		color--;
+	}
+	ofSetColor(color);
 	backgroundImage.draw(0, 0, ofGetWidth(), ofGetHeight());
 	drawBars();
 	drawDots();
@@ -50,11 +62,13 @@ void ofApp::draw(){
 //Setup, Update, and Draw Dots for foreground animation of the Audio Visualizer
 void ofApp::drawDots() {
 	if (maxBarHeightReached) {
-		dotRadius = 4;
+		dotRadius = 6;
 		lineWidth = 3;
+		speedMultiplier = 1.1;
 	} else {
 		dotRadius = 3;
 		lineWidth = 2;
+		speedMultiplier = .8;
 	}
 	//Centers the dots within the animation 
 	ofPushMatrix();
