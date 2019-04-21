@@ -2,10 +2,11 @@
 
 
 const int numberOfDots = 450;
-//Range for frequency of audio
 const int numberOfBars = 400;
-int barWidth = 10;
-int maxBarHeight = 250;
+const int maxColorValue = 255;
+const int barWidth = 10;
+const int maxBarHeight = 300;
+const int minBarHeight = 25;
 //Two dimensional vector-like structure to hold dots and their x,y coordinates
 ofVec2f dots[numberOfDots];
 float dotRadius = 3;
@@ -15,12 +16,15 @@ int distanceThreshold = 50;
 double dotSpeed = .1;
 int animationRadius = 550;
 double currentTime = 0;
+vector<int> xPositionOfBars(numberOfBars);
 vector<bool> isConnected(numberOfDots, false);
 //Vector that determines the offset of the x,y coordindates of each dot to ensure they remain centered and on screen
 vector<double> yOffset(numberOfDots), xOffset(numberOfDots);
 float soundSpectrum[numberOfBars];
 bool maxBarHeightReached = false;
-int color = 200;
+int backColor = 200;
+float soundSpectrumSmoothnessVal = .93;
+
 
 
 
@@ -34,25 +38,25 @@ void ofApp::setup() {
 	
 	}
 	for (int i = 0; i < numberOfBars; i++) {
-		soundSpectrum[i] = 0.0f;
+		soundSpectrum[i] = 0;
+		xPositionOfBars[i] = (barWidth + 1) * i;
 	}
 }
 
 void ofApp::update(){
 	ofSoundUpdate();
-	//Gets a frequency spectrum sample 
 	updateDots();
 	updateBars();
 }
 
 void ofApp::draw(){
-	if (maxBarHeightReached && color < 255) {
-		color++;
+	if (maxBarHeightReached && backColor <= maxColorValue) {
+		backColor++;
 	}
-	else if (color >= 100) {
-		color--;
+	else if (backColor >= 100) {
+		backColor--;
 	}
-	ofSetColor(color);
+	ofSetColor(backColor);
 	backgroundImage.draw(0, 0, ofGetWidth(), ofGetHeight());
 	drawBars();
 	drawDots();
@@ -62,13 +66,9 @@ void ofApp::draw(){
 //Setup, Update, and Draw Dots for foreground animation of the Audio Visualizer
 void ofApp::drawDots() {
 	if (maxBarHeightReached) {
-		dotRadius = 6;
-		lineWidth = 3;
-		speedMultiplier = 1.1;
+		bassSpike();
 	} else {
-		dotRadius = 3;
-		lineWidth = 2;
-		speedMultiplier = .8;
+		clearBassSpike();
 	}
 	//Centers the dots within the animation 
 	ofPushMatrix();
@@ -105,15 +105,16 @@ void ofApp::updateDots() {
 	double timeDifference = timeElapsed - currentTime;
 	currentTime = timeElapsed;
 	for (int i = 0; i < numberOfDots; i++) {
-		//Retrieve the total moved distance by the dots
+		//Retrieve the total moved distance by the dots. Speed of point depends on highest freq at current time
 		yOffset[i] += dotSpeed * getHighestFreq() * timeDifference;
 		xOffset[i] += dotSpeed * getHighestFreq() * timeDifference;
 		//Update the coordinates of each dot with Perlin Noise
 		dots[i].x = ofSignedNoise(xOffset[i]) * animationRadius;
-		dots[i].y = ofSignedNoise(yOffset[i]) * animationRadius - 20;
+		dots[i].y = ofSignedNoise(yOffset[i]) * animationRadius;
 	}
 }
 
+//Retrieves the highest frequency value within the sound spectrum
 float ofApp::getHighestFreq() {
 	float highestFrequency = 0.0F;
 	for (int i = 0; i < numberOfBars; i++) {
@@ -127,13 +128,15 @@ float ofApp::getHighestFreq() {
 void ofApp::drawBars() {
 	maxBarHeightReached = false;
 	float barHeight;
+	float barHeightThreshold;
 	//Draw rectangles based on audio frequency
 	for (int i = 0; i < numberOfBars; i++) {
-		barHeight = -soundSpectrum[i] * 250;
-		ofRect(i * 5, ofGetHeight(), 4, barHeight);
-	}
-	if (-barHeight >= 250) {
-		maxBarHeightReached = true;
+		barHeight = -soundSpectrum[i] * maxBarHeight;
+		barHeightThreshold = maxBarHeight - minBarHeight;
+		if (-barHeight >= barHeightThreshold) {
+			maxBarHeightReached = true;
+		}
+		ofRect(xPositionOfBars[i], ofGetHeight(), barWidth, barHeight - minBarHeight);
 	}
 }
 
@@ -142,9 +145,27 @@ void ofApp::updateBars() {
 	//Assistance in creating audio reactive bars through tutorial: https://www.youtube.com/watch?v=IiTsE7P-GDs
 	float *value = ofSoundGetSpectrum(numberOfBars);
 	for (int i = 0; i < numberOfBars; i++) {
-		soundSpectrum[i] *= .97;
+		soundSpectrum[i] *= soundSpectrumSmoothnessVal;
 		soundSpectrum[i] = max(soundSpectrum[i], value[i]);
+		xPositionOfBars[i] += 1;
+		if (xPositionOfBars[i] > ofGetScreenWidth()) {
+			xPositionOfBars[i] = -barWidth;
+		}
 	}
+}
+
+//Settings for when bar achieves maximum height
+void bassSpike() {
+	dotRadius = 6;
+	lineWidth = 3;
+	speedMultiplier = 1.1;
+}
+
+//Regular settings
+void clearBassSpike() {
+	dotRadius = 3;
+	lineWidth = 2;
+	speedMultiplier = .8;
 }
 
 

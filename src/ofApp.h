@@ -2,6 +2,9 @@
 
 #include "ofMain.h"
 
+void bassSpike();
+void clearBassSpike();
+
 class ofApp : public ofBaseApp{
 	struct Color {
 		Color(int blue, int red, int green) : blueColor(blue), redColor(red), greenColor(green) {};
