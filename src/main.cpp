@@ -16,7 +16,7 @@ int main( ){
 	// The first two parameters are the height and width of the screen. The last parameter is the display mode:
 	// OF_WINDOW (display of specified width and height) or OF_FULLSCREEN (full-screen display).
 
-	ofSetupOpenGL(1024,768,OF_WINDOW);		
+	ofSetupOpenGL(1440,768,OF_FULLSCREEN);		
 
 	// The line belows starts running my application.
 	ofRunApp(new ofApp());

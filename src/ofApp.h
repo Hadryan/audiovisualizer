@@ -12,11 +12,7 @@ class ofApp : public ofBaseApp{
 	Color *backgroundColor = new Color(175, 175, 175);
 	
 	ofSoundPlayer soundPlayer;
-
-	int distanceThreshold = 50;
-	double dotSpeed = .1;
-	int animationRadius = 450;
-	double currentTime = 0;
+	ofImage backgroundImage;
 
 	public:
 		void setup();

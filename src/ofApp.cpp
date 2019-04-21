@@ -1,10 +1,17 @@
 #include "ofApp.h"
 
-const int numberOfDots = 300;
+
+const int numberOfDots = 450;
 //Range for frequency of audio
-const int numberOfBars = 500;
+const int numberOfBars = 400;
 //Two dimensional vector-like structure to hold dots and their x,y coordinates
+int barWidth = 10;
+int maxBarHeight = 250;
 ofVec2f dots[numberOfDots];
+int distanceThreshold = 50;
+double dotSpeed = .1;
+int animationRadius = 500;
+double currentTime = 0;
 float dotRadius = 3;
 float lineWidth = 2;
 float speedMultiplier = 2;
@@ -17,6 +24,7 @@ bool maxBarHeightReached = false;
 
 
 void ofApp::setup() {
+	backgroundImage.load("C:\\Users\\simde\\source\\repos\\of_v0.10.1_vs2017_release\\apps\\myApps\\finalProject - sdesai51\\bin\\data\\sunset.jpg`");
 	soundPlayer.loadSound("..//..//audio//audioBeats.wav");
 	soundPlayer.play();
 	for (int i = 0; i < numberOfDots; i++) {
@@ -24,7 +32,6 @@ void ofApp::setup() {
 		yOffset[i] = ofRandom(0, 1000);
 	
 	}
-
 	for (int i = 0; i < numberOfBars; i++) {
 		soundSpectrum[i] = 0.0f;
 	}
@@ -41,8 +48,7 @@ void ofApp::update(){
 }
 
 void ofApp::draw(){
-	ofBackground(backgroundColor->blueColor, backgroundColor->redColor, backgroundColor->greenColor);
-	//Draw rectangles based on audio frequency
+	backgroundImage.draw(0, 0, ofGetWidth(), ofGetHeight());
 	drawBars();
 	drawDots();
 
@@ -85,6 +91,7 @@ void ofApp::linkDots() {
 	}
 }
 
+//Updates the positioning of the dots on the screen
 void ofApp::updateDots() {
 	double timeElapsed = ofGetElapsedTimef();
 	//The difference in time since the last update happened
@@ -96,19 +103,20 @@ void ofApp::updateDots() {
 		xOffset[i] += dotSpeed * timeDifference;
 		//Update the coordinates of each dot with Perlin Noise
 		dots[i].x = ofSignedNoise(xOffset[i]) * animationRadius;
-		dots[i].y = ofSignedNoise(yOffset[i]) * animationRadius;
+		dots[i].y = ofSignedNoise(yOffset[i]) * animationRadius - 20;
 	}
 }
 
 void ofApp::drawBars() {
 	maxBarHeightReached = false;
 	float barHeight;
+	//Draw rectangles based on audio frequency
 	for (int i = 0; i < numberOfBars; i++) {
-		barHeight = -soundSpectrum[i] * 225;
+		float barHeight = -soundSpectrum[i] * 250;
 		ofRect(i * 5, ofGetHeight(), 4, barHeight);
-	}
-	if (-barHeight >= 225) {
-		maxBarHeightReached = true;
+		if (-barHeight >= 250) {
+			maxBarHeightReached = true;
+		}
 	}
 }
 
