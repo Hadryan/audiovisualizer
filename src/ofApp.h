@@ -15,7 +15,7 @@ class ofApp : public ofBaseApp{
 
 	int distanceThreshold = 50;
 	double dotSpeed = .1;
-	int animationRadius = 475;
+	int animationRadius = 450;
 	double currentTime = 0;
 
 	public:
@@ -23,7 +23,7 @@ class ofApp : public ofBaseApp{
 		void update();
 		void draw();
 		void drawDots();
-		void updateColors();
 		void updateDots();
 		void linkDots();
+		void drawRectangles();
 };
