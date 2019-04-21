@@ -5,13 +5,9 @@ const int numberOfDots = 450;
 //Range for frequency of audio
 const int numberOfBars = 400;
 //Two dimensional vector-like structure to hold dots and their x,y coordinates
-int barWidth = 10;
+//int barWidth = 10;
 int maxBarHeight = 250;
 ofVec2f dots[numberOfDots];
-int distanceThreshold = 50;
-double dotSpeed = .1;
-int animationRadius = 500;
-double currentTime = 0;
 float dotRadius = 3;
 float lineWidth = 2;
 float speedMultiplier = 2;
@@ -40,11 +36,8 @@ void ofApp::setup() {
 void ofApp::update(){
 	ofSoundUpdate();
 	//Gets a frequency spectrum sample 
-	float *value = ofSoundGetSpectrum(numberOfBars);
 	updateDots();
-	for (int i = 0; i < numberOfBars; i++) {
-		soundSpectrum[i] = max(soundSpectrum[i], value[i]);
-	}
+	updateBars();
 }
 
 void ofApp::draw(){
@@ -99,12 +92,22 @@ void ofApp::updateDots() {
 	currentTime = timeElapsed;
 	for (int i = 0; i < numberOfDots; i++) {
 		//Retrieve the total moved distance by the dots
-		yOffset[i] += dotSpeed * timeDifference;
-		xOffset[i] += dotSpeed * timeDifference;
+		yOffset[i] += dotSpeed * getHighestFreq() * timeDifference;
+		xOffset[i] += dotSpeed * getHighestFreq() * timeDifference;
 		//Update the coordinates of each dot with Perlin Noise
 		dots[i].x = ofSignedNoise(xOffset[i]) * animationRadius;
 		dots[i].y = ofSignedNoise(yOffset[i]) * animationRadius - 20;
 	}
+}
+
+float ofApp::getHighestFreq() {
+	float highestFrequency = 0.0F;
+	for (int i = 0; i < numberOfBars; i++) {
+		if (highestFrequency < soundSpectrum[i]) {
+			highestFrequency = soundSpectrum[i];
+		}
+	}
+	return highestFrequency;
 }
 
 void ofApp::drawBars() {
@@ -112,13 +115,24 @@ void ofApp::drawBars() {
 	float barHeight;
 	//Draw rectangles based on audio frequency
 	for (int i = 0; i < numberOfBars; i++) {
-		float barHeight = -soundSpectrum[i] * 250;
+		barHeight = -soundSpectrum[i] * 250;
 		ofRect(i * 5, ofGetHeight(), 4, barHeight);
-		if (-barHeight >= 250) {
-			maxBarHeightReached = true;
-		}
+	}
+	if (-barHeight >= 250) {
+		maxBarHeightReached = true;
 	}
 }
+
+//Updates the bars reactive to the audio frequency
+void ofApp::updateBars() {
+	//Assistance in creating audio reactive bars through tutorial: https://www.youtube.com/watch?v=IiTsE7P-GDs
+	float *value = ofSoundGetSpectrum(numberOfBars);
+	for (int i = 0; i < numberOfBars; i++) {
+		soundSpectrum[i] *= .97;
+		soundSpectrum[i] = max(soundSpectrum[i], value[i]);
+	}
+}
+
 
 
 
