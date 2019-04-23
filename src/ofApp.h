@@ -2,8 +2,8 @@
 
 #include "ofMain.h"
 
-void bassSpike();
-void clearBassSpike();
+void spike();
+void clearSpike();
 
 class ofApp : public ofBaseApp{
 	struct Color {
@@ -12,7 +12,7 @@ class ofApp : public ofBaseApp{
 		int redColor;
 		int greenColor;
 	};
-	Color *backgroundColor = new Color(175, 175, 175);
+	Color *backgroundColor = new Color(180, 180, 180);
 	
 	ofSoundPlayer soundPlayer;
 

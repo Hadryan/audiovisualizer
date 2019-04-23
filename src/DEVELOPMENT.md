@@ -15,12 +15,12 @@
 			- Fix: Made a variable and updated it based on max bar height being reached in order to keep track of and change brightness
 			based on that condition.
 
-			- Issue: Initialization of offsets for the dots were resulting in errors in dot positioning and movement
-			i.e the dots would flash or move in a linear manner
+			- Issue: Setting the initial offsets for the dots were resulting in errors in dot positioning and movement
+			in which the dots would flash or move in a linear manner
 			- Fix: Utilized a method in openframeworks called ofRandom that would randomize point offset values
 
-			-Issue: Had difficulty using the ofSoundStream to get frequencies for the stream. I wanted to use this
-			as a means to capture the audio of the system rather than capturing an individual song's audio in a file.
+			-Issue: Had difficulty using the ofSoundStream to get frequencies for the stream. The intention was to have this 
+			get the audio of the system rather than for an individual song's audio in a file.
 			-Fix: Switched entirely to start using ofSoundPlayer and made the decision to just work with a single
 			song for now.
 
