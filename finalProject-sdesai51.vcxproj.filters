@@ -15,9 +15,6 @@
     <Filter Include="audio">
       <UniqueIdentifier>{e9ab826c-5ff1-4d57-8ed1-bef49a8a4460}</UniqueIdentifier>
     </Filter>
-    <Filter Include="images">
-      <UniqueIdentifier>{67371c6b-5356-4bc9-a76c-44e7942dbb68}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
@@ -40,11 +37,6 @@
     <None Include="src\README.md">
       <Filter>src</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="src\sunset.jpg">
-      <Filter>images</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="audio\audioBeats.wav">

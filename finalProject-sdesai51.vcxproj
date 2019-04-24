@@ -205,9 +205,6 @@
     <None Include="src\README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="src\sunset.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Media Include="audio\audioBeats.wav" />
     <Media Include="audio\epiphany.wav" />
   </ItemGroup>
