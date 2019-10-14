@@ -22,3 +22,5 @@ In this code snippet, you will want to change "audioBeats.wav" to the name of th
     * ofSoundPlayer - to play various music files
 
     * ofGraphics - used to create visuals including the bars and points 
+
+
