@@ -23,4 +23,5 @@ In this code snippet, you will want to change "audioBeats.wav" to the name of th
 
     * ofGraphics - used to create visuals including the bars and points 
 
+![alt text](https://sdesai51.github.io/assets/audiovisualizer.png)
 
